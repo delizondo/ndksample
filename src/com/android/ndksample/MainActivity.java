@@ -32,4 +32,11 @@ public class MainActivity extends Activity {
 
 	public static native long nativeFibonacci(int n);
 
+	private long javaFibonacci(int n) {
+		if (n > 1) {
+			return javaFibonacci(n - 2) + javaFibonacci(n - 1);
+		}
+		return n;
+	}
+
 }
