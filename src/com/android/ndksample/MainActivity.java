@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,6 +20,8 @@ public class MainActivity extends Activity {
 	private TextView mJavaTimeLbl;
 
 	private TextView mNativeTimeLbl;
+
+	private static final String TAG = "MainActivity";
 
 	static {
 		System.loadLibrary("fibonacci");
@@ -49,8 +52,8 @@ public class MainActivity extends Activity {
 			long value = Long.valueOf(TextUtils.isEmpty(mEditText.getText()
 					.toString()) ? "0" : mEditText.getText().toString());
 
-			new NativeAsyncCalculation().execute(value);
 			new JavaAsyncCalculation().execute(value);
+			new NativeAsyncCalculation().execute(value);
 
 		}
 	}
@@ -69,7 +72,15 @@ public class MainActivity extends Activity {
 		@Override
 		protected Long doInBackground(Long... params) {
 			long n = params[0];
-			long result = nativeFibonacci(n);
+			long result = -1;
+			try {
+				result = nativeFibonacci(n);
+			} catch (UnsatisfiedLinkError e) {
+				// Tried to run the native method in a not supported processor
+				// architecture
+				Log.e(TAG, e.getMessage(), e);
+				result = javaFibonacci(n);
+			}
 			return result;
 		}
 

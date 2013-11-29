@@ -1,4 +1,4 @@
-/Users/davidelizondo/Proyectos/NDKSample/obj/local/armeabi/objs/fibonacci/com_android_ndksample_MainActivity.o: \
+/Users/davidelizondo/Proyectos/NDKSample/obj/local/armeabi-v7a/objs/fibonacci/com_android_ndksample_MainActivity.o: \
  /Users/davidelizondo/Proyectos/NDKSample/jni/com_android_ndksample_MainActivity.c \
  /Users/davidelizondo/Proyectos/NDKSample/jni/com_android_ndksample_MainActivity.h \
  /Users/davidelizondo/android-ndk-r9b/platforms/android-19/arch-arm/usr/include/jni.h \

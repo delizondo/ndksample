@@ -6,10 +6,11 @@
  */
 
 #include "com_android_ndksample_MainActivity.h"
-#include "fibonacci.c"
+#include "fibonacci.h"
 
 jlong JNICALL
 Java_com_android_ndksample_MainActivity_nativeFibonacci(JNIEnv *env,
 		jclass clazz, jint n) {
 	return calculateFibonacci(n);
 }
+

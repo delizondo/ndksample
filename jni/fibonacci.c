@@ -8,7 +8,7 @@
 
 uint64_t calculateFibonacci(long n) {
 	if (n > 1) {
-		long n1 = 0, n2 = 1;
+		uint64_t n1 = 0, n2 = 1;
 		do {
 			long tmp = n2;
 			n2 += n1;
