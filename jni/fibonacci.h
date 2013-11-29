@@ -10,6 +10,6 @@
 #ifndef FIBONACCI_H_
 #define FIBONACCI_H_
 
-extern uint64_t recursive(int n);
+extern uint64_t calculateFibonacci(long n);
 
 #endif /* FIBONACCI_H_ */

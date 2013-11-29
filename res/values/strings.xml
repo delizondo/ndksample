@@ -4,5 +4,10 @@
     <string name="app_name">NDKSample</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="edit_text_hint">Enter the value to calculate</string>
+    <string name="calculate_btn_text">Calculate</string>
+    <string name="time_text">time: %s ms</string>
+    <string name="native_method">Native</string>
+    <string name="java_method">Java</string>
 
 </resources>

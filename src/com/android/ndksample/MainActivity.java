@@ -1,13 +1,24 @@
 package com.android.ndksample;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	private TextView mNativeResult;
+	private EditText mEditText;
+
+	private Button mCalculateBtn;
+
+	private TextView mJavaTimeLbl;
+
+	private TextView mNativeTimeLbl;
 
 	static {
 		System.loadLibrary("fibonacci");
@@ -17,24 +28,114 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mNativeResult = (TextView) findViewById(R.id.native_result);
 
-		mNativeResult.setText(String.valueOf(nativeFibonacci(6)));
+		mEditText = (EditText) findViewById(R.id.edittext);
+
+		mCalculateBtn = (Button) findViewById(R.id.calculate_btn);
+
+		mJavaTimeLbl = (TextView) findViewById(R.id.java_time_lbl);
+
+		mNativeTimeLbl = (TextView) findViewById(R.id.native_time_lbl);
+
+		mCalculateBtn.setOnClickListener(new CalculateClickListener());
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	private class CalculateClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+
+			long value = Long.valueOf(TextUtils.isEmpty(mEditText.getText()
+					.toString()) ? "0" : mEditText.getText().toString());
+
+			new NativeAsyncCalculation().execute(value);
+			new JavaAsyncCalculation().execute(value);
+
+		}
 	}
 
-	public static native long nativeFibonacci(int n);
+	private class NativeAsyncCalculation extends AsyncTask<Long, Void, Long> {
 
-	private long javaFibonacci(int n) {
+		private long mStartTime;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mStartTime = System.currentTimeMillis();
+		}
+
+		@Override
+		protected Long doInBackground(Long... params) {
+			long n = params[0];
+			long result = nativeFibonacci(n);
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Long result) {
+			super.onPostExecute(result);
+
+			long totalTime = System.currentTimeMillis() - mStartTime;
+			mNativeTimeLbl.setText(getString(R.string.time_text, totalTime));
+
+		}
+
+	}
+
+	private class JavaAsyncCalculation extends AsyncTask<Long, Void, Long> {
+		private long mStartTime;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mStartTime = System.currentTimeMillis();
+		}
+
+		@Override
+		protected Long doInBackground(Long... params) {
+			long n = params[0];
+			long result = javaFibonacci(n);
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Long result) {
+			super.onPostExecute(result);
+
+			long totalTime = System.currentTimeMillis() - mStartTime;
+			mJavaTimeLbl.setText(getString(R.string.time_text, totalTime));
+
+		}
+	}
+
+	/**
+	 * Definition of the native function to calculate the fibonacci value of N
+	 * number
+	 * 
+	 * @param n
+	 *            The value to calculate
+	 * @return the fibonacci value of n
+	 */
+	public static native long nativeFibonacci(long n);
+
+	/**
+	 * Definition of the java function to calculate the fibonacci value of N
+	 * number
+	 * 
+	 * @param n
+	 *            The value to calculate
+	 * @return the fibonacci value of n
+	 */
+	private long javaFibonacci(long n) {
 		if (n > 1) {
-			return javaFibonacci(n - 2) + javaFibonacci(n - 1);
+			long n1 = 0, n2 = 1;
+			do {
+				long tmp = n2;
+				n2 += n1;
+				n1 = tmp;
+			} while (--n > 1);
+			return n2;
 		}
 		return n;
 	}

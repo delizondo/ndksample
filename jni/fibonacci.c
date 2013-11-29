@@ -6,11 +6,16 @@
  */
 #include "fibonacci.h"
 
-uint64_t recursive(int n) {
+uint64_t calculateFibonacci(long n) {
 	if (n > 1) {
-		return recursive(n - 2) + recursive(n - 1);
+		long n1 = 0, n2 = 1;
+		do {
+			long tmp = n2;
+			n2 += n1;
+			n1 = tmp;
+		} while (--n > 1);
+		return n2;
 	}
 	return n;
-
 }
 

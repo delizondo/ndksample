@@ -11,5 +11,5 @@
 jlong JNICALL
 Java_com_android_ndksample_MainActivity_nativeFibonacci(JNIEnv *env,
 		jclass clazz, jint n) {
-	return recursive(n);
+	return calculateFibonacci(n);
 }

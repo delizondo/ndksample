@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="edittext" type="id"/>
+    <item name="calculate_btn" type="id"/>
+    <item name="horizontal_divider" type="id"/>
+    <item name="vertical_divider" type="id"/>
+    <item name="java_time_lbl" type="id"/>
+    <item name="native_time_lbl" type="id"/>
+
+</resources>
