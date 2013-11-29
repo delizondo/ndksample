@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			mNativeTimeLbl.setText(getString(R.string.loading));
 			mStartTime = System.currentTimeMillis();
 		}
 
@@ -89,6 +90,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			mJavaTimeLbl.setText(getString(R.string.loading));
 			mStartTime = System.currentTimeMillis();
 		}
 

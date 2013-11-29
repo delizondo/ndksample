@@ -9,5 +9,6 @@
     <string name="time_text">time: %s ms</string>
     <string name="native_method">Native</string>
     <string name="java_method">Java</string>
+    <string name="loading">&#8230;</string>
 
 </resources>
